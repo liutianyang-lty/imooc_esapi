@@ -1,0 +1,11 @@
+20-05-08 03:21:01:Error at file[/www/wwwroot/imooc_esapi/vendor/easyswoole/easyswoole/src/Core/Swoole/ServerManager.php] line[115] message:[Uncaught Swoole\Exception: failed to listen server port[0.0.0.0:9501], Error: Address already in use[98] in /www/wwwroot/imooc_esapi/vendor/easyswoole/easyswoole/src/Core/Swoole/ServerManager.php:115
+Stack trace:
+#0 /www/wwwroot/imooc_esapi/vendor/easyswoole/easyswoole/src/Core/Swoole/ServerManager.php(115): Swoole\Server->__construct('0.0.0.0', 9501, 2, 1)
+#1 /www/wwwroot/imooc_esapi/vendor/easyswoole/easyswoole/src/Core/Swoole/ServerManager.php(61): EasySwoole\Core\Swoole\ServerManager->createMainServer()
+#2 /www/wwwroot/imooc_esapi/vendor/easyswoole/easyswoole/src/Core/Core.php(45): EasySwoole\Core\Swoole\ServerManager->start()
+#3 /www/wwwroot/imooc_esapi/vendor/easyswoole/easyswoole/bin/easyswoole(326): EasySwoole\Core\Core->run()
+#4 /www/wwwroot/imooc_esapi/vendor/easyswoole/easyswoole/bin/easyswoole(25): serverStart(Array)
+#5 /www/wwwroot/imooc_esapi/vendor/easyswoole/easyswoole/bin/easyswoole(462): commandHandler()
+#6 /www/wwwroot/imooc_esapi/easyswoole(2): require('/www/wwwroot/im...')
+#7 {main}
+  thr]
