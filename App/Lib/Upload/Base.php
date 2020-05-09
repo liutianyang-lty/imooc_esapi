@@ -14,7 +14,6 @@ class Base
         $files = $this->request->getSwooleRequest()->files;
         $types = array_keys($files);
         $this->type = $types[0];
-        print_r($this->type);
     }
 
     public function upload()
@@ -31,9 +30,20 @@ class Base
 
         $this->clientMediaType = $videos->getClientMediaType();
         $this->checkMediaType();
-        echo $fileName;
+
+        $this->getFile($fileName);
+
     }
 
+    public function getFile($fileName)
+    {
+        $pathinfo = pathinfo($fileName);
+        echo $pathinfo;
+    }
+
+    /**
+     * @return bool
+     */
     public function checkSize()
     {
         if (empty($this->size)) {
@@ -43,8 +53,23 @@ class Base
         //TODO
     }
 
+    /**
+     * @return bool
+     * @throws \Exception
+     */
     public function checkMediaType()
     {
-        echo $this->clientMediaType;
+        $clienMediaType = explode('/', $this->clientMediaType);
+        $clienMediaType = $clienMediaType[1];
+
+        if (empty($clienMediaType)) {
+            throw new \Exception("上传{$this->type}文件不合法");
+        }
+
+        if (!in_array($clienMediaType, $this->fileExtTypes)) {
+            throw new \Exception("上传{$this->type}文件不合法");
+        }
+
+        return true;
     }
 }
