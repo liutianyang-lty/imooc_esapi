@@ -1,6 +1,7 @@
 <?php
 namespace App\HttpController\Api;
 use App\HttpController\Api\Base;
+use App\Lib\Upload\Video;
 use \EasySwoole\Core\Component\Di;
 use App\Lib\Redis\Redis;
 
@@ -19,17 +20,21 @@ class Upload extends Base
     public function file()
     {
         $request = $this->request();
-        $videos = $request->getUploadedFile('file');
-        $flag = $videos->moveTo("/www/wwwroot/imooc_esapi/webroot/1.jpg");
+        $obj = new Video($request);
 
-        $data = [
-            'url' => "1.jpg",
-            'flag' => $flag,
-        ];
-        if ($flag) {
-            return $this->writeJson(200, 'OK', $data);
-        } else {
-            return $this->writeJson(400, 'OK', $data);
-        }
+        $obj->upload();
+//        $request = $this->request();
+//        $videos = $request->getUploadedFile('file');
+//        $flag = $videos->moveTo("/www/wwwroot/imooc_esapi/webroot/1.jpg");
+//
+//        $data = [
+//            'url' => "1.jpg",
+//            'flag' => $flag,
+//        ];
+//        if ($flag) {
+//            return $this->writeJson(200, 'OK', $data);
+//        } else {
+//            return $this->writeJson(400, 'OK', $data);
+//        }
     }
 }
