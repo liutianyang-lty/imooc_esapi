@@ -38,7 +38,7 @@ class Base
     public function getFile($fileName)
     {
         $pathinfo = pathinfo($fileName);
-        echo $pathinfo;
+        print_r($pathinfo);
     }
 
     /**
