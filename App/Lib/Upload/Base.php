@@ -6,6 +6,8 @@ class Base
     protected $request;
     public $type = ""; //文件类型
     public $size = "";
+    public $clientMediaType = "";
+
     public function __construct($request)
     {
         $this->request = $request;
@@ -26,6 +28,9 @@ class Base
         $this->size = $videos->getSize();
         $this->checkSize();
         $fileName  = $videos->getClientFileName();
+
+        $this->clientMediaType = $videos->getClientMediaType();
+        $this->checkMediaType();
         echo $fileName;
     }
 
@@ -34,5 +39,12 @@ class Base
         if (empty($this->size)) {
             return false;
         }
+
+        //TODO
+    }
+
+    public function checkMediaType()
+    {
+        echo $this->clientMediaType;
     }
 }
