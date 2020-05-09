@@ -3,10 +3,10 @@ namespace App\Lib\Redis;
 
 use EasySwoole\Core\AbstractInterface\Singleton;
 use EasySwoole\Config;
-class Redis {
+class Redis2 {
     use Singleton;
 
-    public $redis = "";
+    public static $redis = "";
 
     private function __construct()
     {
@@ -21,8 +21,8 @@ class Redis {
             //通过 Yaconf获取配置文件
             $redisConfig = \Yaconf::get('redis');
             //var_dump($redisConfig);
-            $this->redis = new \Redis();
-            $result = $this->redis->connect($redisConfig['host'], $redisConfig['port'], $redisConfig['time_out']);
+            self::$redis = new \Redis();
+            $result = self::$redis->connect($redisConfig['host'], $redisConfig['port'], $redisConfig['time_out']);
         } catch (\Exception $e) {
             throw new \Exception("redis服务异常");
         }
@@ -32,30 +32,23 @@ class Redis {
         }
     }
 
-    public function get($key)
+    /**
+     * 魔术方法静态调用
+     * @param $method_name
+     * @param $param
+     * @return mixed
+     */
+    public function __call($method_name, $param)
     {
-        if (empty($key)) {
-            return '';
+        if (!self::$redis) {
+            self::getInstance();
         }
-
-        return $this->redis->get($key);
+        try {
+            return call_user_func_array([self::$redis, $method_name], $param);
+        } catch (\Exception $e) {
+            print $e->getMessage();
+            exit;
+        }
     }
 
-    public function lPop($key)
-    {
-        if (empty($key)) {
-            return '';
-        }
-
-        return $this->redis->lPop($key);
-    }
-
-    public function rPush($key, $value)
-    {
-        if (empty($key)) {
-            return '';
-        }
-
-        return $this->redis->rPush($key, $value);
-    }
 }

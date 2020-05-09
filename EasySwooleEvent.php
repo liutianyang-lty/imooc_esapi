@@ -9,13 +9,16 @@
 namespace EasySwoole;
 
 use \EasySwoole\Core\AbstractInterface\EventInterface;
+use EasySwoole\Core\Swoole\Process\ProcessManager;
 use \EasySwoole\Core\Swoole\ServerManager;
 use \EasySwoole\Core\Swoole\EventRegister;
 use \EasySwoole\Core\Http\Request;
 use \EasySwoole\Core\Http\Response;
 use \EasySwoole\Core\Component\Di;
 use App\Lib\Redis\Redis;
+use App\Lib\Redis\Redis2;
 use EasySwoole\Core\Utility\File;
+use App\Lib\Process\ConsumerTest;
 
 Class EasySwooleEvent implements EventInterface {
 
@@ -52,7 +55,13 @@ Class EasySwooleEvent implements EventInterface {
         ));
 
         //redis相关
-        Di::getInstance()->set('REDIS', Redis::getInstance());
+        Di::getInstance()->set('REDIS', Redis2::getInstance());
+
+        //注册消费者进程
+        $allNum = 3;
+        for ($i = 0; $i < $allNum; $i++) {
+            ProcessManager::getInstance()->addProcess("consumer_{$i}", ConsumerTest::class);
+        }
     }
 
     public static function onRequest(Request $request,Response $response): void

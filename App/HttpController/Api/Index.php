@@ -52,4 +52,10 @@ class Index extends Base
         $redis = \Yaconf::get('redis');
         return $this->writeJson(200, 'OK', $redis);
     }
+
+    public function push()
+    {
+        $param = $this->request()->getRequestParam();
+        Di::getInstance()->get('REDIS')->rPush('imooc_list_test', $param['f']);
+    }
 }
