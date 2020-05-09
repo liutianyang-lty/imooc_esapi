@@ -25,7 +25,7 @@ class Base
         $videos = $this->request->getUploadedFile($this->type);
 
         $this->size = $videos->getSize();
-        dump($this->size);
+        echo $this->size;
         $this->checkSize();
         $fileName  = $videos->getClientFileName();
 
