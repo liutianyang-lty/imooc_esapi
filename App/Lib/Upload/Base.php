@@ -10,13 +10,18 @@ class Base
     public $clientMediaType = "";
     public $file;
 
-    public function __construct($request)
+    public function __construct($request, $type=null)
     {
         $this->request = $request;
         //获取文件信息
-        $files = $this->request->getSwooleRequest()->files;
-        $types = array_keys($files);
-        $this->type = $types[0];
+        if (empty($type)) {
+            $files = $this->request->getSwooleRequest()->files;
+            $types = array_keys($files);
+            $this->type = $types[0];
+        } else {
+            $this->type = $type;
+        }
+
     }
 
     public function upload()

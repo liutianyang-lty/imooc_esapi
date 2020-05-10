@@ -23,6 +23,10 @@ class Upload extends Base
         $files = $request->getSwooleRequest()->files;
         $types = array_keys($files);
         $type = $types[0];
+        if (empty($type)) {
+            return $this->writeJson(400, '上传文件不合法');
+        }
+
 
         try {
             set_time_limit(0);
@@ -32,7 +36,7 @@ class Upload extends Base
             //使用PHP的反射机制
             $classObj = new ClassArr();
             $classStats = $classObj->uploadClassStat();
-            $uploadObj = $classObj->initClass($type, $classStats, [$request]);
+            $uploadObj = $classObj->initClass($type, $classStats, [$request, $type]);
             $file = $uploadObj->upload();
         } catch (\Exception $e) {
             return $this->writeJson(400, $e->getMessage(), []);
