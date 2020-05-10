@@ -18,6 +18,7 @@ class Upload extends Base
 
     public function file()
     {
+        set_time_limit(0);
         $request = $this->request();
         print_r($request);
 //        $obj = new Video($request);
