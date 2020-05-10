@@ -20,7 +20,8 @@ class Upload extends Base
     {
         set_time_limit(0);
         $request = $this->request();
-        print_r($request);
+        $videos = $request->getUploadedFile("video");
+        print_r($videos);
 //        $obj = new Video($request);
 //
 //        $obj->upload();
