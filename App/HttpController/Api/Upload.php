@@ -21,7 +21,8 @@ class Upload extends Base
         $request = $this->request();
         try {
             set_time_limit(0);
-            $obj = new Video($request);
+            //$obj = new Video($request); //视频文件上传
+            $obj = new \App\Lib\Upload\Image($request);
             $file = $obj->upload();
         } catch (\Exception $e) {
             return $this->writeJson(400, $e->getMessage(), []);
