@@ -2,6 +2,7 @@
 namespace App\HttpController\Api;
 
 use App\HttpController\Api\Base;
+use App\Lib\ClassArr;
 use App\Lib\Upload\Video;
 
 /**
@@ -19,11 +20,20 @@ class Upload extends Base
     public function file()
     {
         $request = $this->request();
+        $files = $request->getSwooleRequest()->files;
+        $types = array_keys($files);
+        $type = $types[0];
+
         try {
             set_time_limit(0);
             //$obj = new Video($request); //视频文件上传
-            $obj = new \App\Lib\Upload\Image($request);
-            $file = $obj->upload();
+            //$obj = new \App\Lib\Upload\Image($request); //图片文件上传
+
+            //使用PHP的反射机制
+            $classObj = new ClassArr();
+            $classStats = $classObj->uploadClassStat();
+            $uploadObj = $classObj->initClass($type, $classStats, [$request]);
+            $file = $uploadObj->upload();
         } catch (\Exception $e) {
             return $this->writeJson(400, $e->getMessage(), []);
         }
