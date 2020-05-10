@@ -58,10 +58,10 @@ Class EasySwooleEvent implements EventInterface {
         Di::getInstance()->set('REDIS', Redis::getInstance());
 
         //注册消费者进程
-        $allNum = 3;
-        for ($i = 0; $i < $allNum; $i++) {
-            ProcessManager::getInstance()->addProcess("consumer_{$i}", ConsumerTest::class);
-        }
+//        $allNum = 3;
+//        for ($i = 0; $i < $allNum; $i++) {
+//            ProcessManager::getInstance()->addProcess("consumer_{$i}", ConsumerTest::class);
+//        }
     }
 
     public static function onRequest(Request $request,Response $response): void
