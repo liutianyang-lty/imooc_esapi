@@ -9,6 +9,6 @@ class Video extends Base {
     //文件后缀的mediaType
     public $fileExtTypes = [
         'mp4',
-        'x-flv',
+        //'x-flv',
     ];
 }
