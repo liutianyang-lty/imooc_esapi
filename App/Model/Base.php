@@ -13,6 +13,7 @@ class Base {
         }
 
         $db = Di::getInstance()->get("MYSQL"); //通过依赖注入得到mysql实例
+        dump($db);
         if ($db instanceof \Mysqlidb) {
             $this->db = $db;
         } else {
