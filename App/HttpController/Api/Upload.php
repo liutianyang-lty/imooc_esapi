@@ -1,9 +1,8 @@
 <?php
 namespace App\HttpController\Api;
+
 use App\HttpController\Api\Base;
 use App\Lib\Upload\Video;
-use \EasySwoole\Core\Component\Di;
-use App\Lib\Redis\Redis;
 
 /**
  * 文件上传逻辑 - 视频 图片
@@ -20,9 +19,10 @@ class Upload extends Base
     public function file()
     {
         $request = $this->request();
-        $obj = new Video($request);
-
-        $obj->upload();
+        print_r($request);
+//        $obj = new Video($request);
+//
+//        $obj->upload();
 //        $request = $this->request();
 //        $videos = $request->getUploadedFile('file');
 //        $flag = $videos->moveTo("/www/wwwroot/imooc_esapi/webroot/1.jpg");

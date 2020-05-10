@@ -61,7 +61,7 @@ class Base
     public function checkMediaType()
     {
         $clienMediaType = explode('/', $this->clientMediaType);
-        $clienMediaType = $clienMediaType[1];
+        $clienMediaType = $clienMediaType[1] ?? "";
 
         if (empty($clienMediaType)) {
             throw new \Exception("上传{$this->type}文件不合法");
