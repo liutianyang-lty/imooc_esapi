@@ -12,6 +12,10 @@ class Index extends Base
 
     }
 
+    /**
+     * 获取视频首页分页数据
+     * @return bool
+     */
     public function lists()
     {
         $params = $this->request()->getRequestParam();
@@ -33,6 +37,7 @@ class Index extends Base
 
     }
 
+    //拦截器的使用
     public function onRequest($action): ?bool
     {
         //$this->writeJson(403, '您没有权限', []);

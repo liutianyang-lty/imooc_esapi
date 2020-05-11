@@ -6,6 +6,14 @@ class Video extends Base {
 
     public $tableName = "video";
 
+    /**
+     * 获取video表中的分页数据
+     * @param array $condition
+     * @param int $page
+     * @param int $size
+     * @return array
+     * @throws \Exception
+     */
     public function getVideoData($condition = [], $page = 1, $size = 10) {
         if (!empty($condition['cat_id'])) {
             $this->db->where('cat_id', $condition['cat_id']);
