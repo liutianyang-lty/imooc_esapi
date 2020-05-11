@@ -3,11 +3,19 @@ namespace App\HttpController\Api;
 use App\HttpController\Api\Base;
 use \EasySwoole\Core\Component\Di;
 use App\Lib\Redis\Redis;
+use App\Model\Video as VideoModel;
 class Index extends Base
 {
     public function index()
     {
 
+    }
+
+    public function lists()
+    {
+        $params = $this->request()->getRequestParam();
+        $videoModel = new VideoModel();
+        $videoModel->getVideoData([], 1);
     }
 
     public function onRequest($action): ?bool
