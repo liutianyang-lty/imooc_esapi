@@ -4,6 +4,7 @@ use App\HttpController\Api\Base;
 use \EasySwoole\Core\Component\Di;
 use App\Lib\Redis\Redis;
 use App\Model\Video as VideoModel;
+use EasySwoole\Core\Http\Message\Status;
 class Index extends Base
 {
     public function index()
@@ -14,8 +15,22 @@ class Index extends Base
     public function lists()
     {
         $params = $this->request()->getRequestParam();
-        $videoModel = new VideoModel();
-        $videoModel->getVideoData([], 1);
+        $page = !empty($params['page']) ? intval($params['page']) : 1;
+        $size = !empty($params['size']) ? intval($params['size']) : 5;
+        $condition = [];
+        if (!empty($params['cat_id'])) {
+            $condition['cat_id'] = intval($params['cat_id']);
+        }
+
+        try {
+            $videoModel = new VideoModel();
+            $data = $videoModel->getVideoData($condition, $page, $size);
+        } catch (\Exception $e) {
+            return $this->writeJson(Status::CODE_BAD_REQUEST, $e->getMessage());
+        }
+
+        return $this->writeJson(Status::CODE_OK, 'OK', $data);
+
     }
 
     public function onRequest($action): ?bool
