@@ -32,6 +32,11 @@ class Redis {
         }
     }
 
+    /**
+     * 获取数据
+     * @param $key
+     * @return bool|string
+     */
     public function get($key)
     {
         if (empty($key)) {
@@ -39,6 +44,27 @@ class Redis {
         }
 
         return $this->redis->get($key);
+    }
+
+    /**
+     * 设置数据
+     * @param $key
+     * @param $value
+     * @param int $time
+     * @return bool|string
+     */
+    public function set($key, $value, $time=0)
+    {
+        if (empty($key)) {
+            return '';
+        }
+        if (is_array($value)) {
+            $value = json_encode($value);
+        }
+        if (!$time) {
+            return $this->redis->set($key, $value);
+        }
+        return $this->redis->set($key, $time, $value);
     }
 
     public function lPop($key)

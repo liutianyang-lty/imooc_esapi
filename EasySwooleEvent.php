@@ -19,7 +19,9 @@ use App\Lib\Redis\Redis;
 use App\Lib\Redis\Redis2;
 use EasySwoole\Core\Utility\File;
 use App\Lib\Process\ConsumerTest;
-
+use EasySwoole\Core\Component\Crontab\CronTab;
+use App\Lib\Cache\Video as videoCache;
+use EasySwoole\Core\Swoole\Time\Timer;
 Class EasySwooleEvent implements EventInterface {
 
     public static function frameInitialize(): void
@@ -62,6 +64,32 @@ Class EasySwooleEvent implements EventInterface {
 //        for ($i = 0; $i < $allNum; $i++) {
 //            ProcessManager::getInstance()->addProcess("consumer_{$i}", ConsumerTest::class);
 //        }
+
+
+        //easyswoole+crontab 定时任务的用法
+        $cacheVideoObj = new videoCache();
+//        Crontab::getInstance()
+//            ->addRule("test_singwa_crontab", "*/1 * * * *",
+//                function () use($cacheVideoObj){ //闭包函数使用外部的变量
+//                    $cacheVideoObj->setIndexVideo();
+//            })
+//            ->addRule("test_singwa_crontab2", "*/2 * * * *",
+//                function () {
+//                    var_dump("singwa_crontab2");
+//            })
+//        ;
+
+        //easyswoole基于swoole的定时任务的用法
+//        Timer::loop(1000*2, function () { //easyswoole自身的定时任务不能这么直接用
+//            var_dump(1);
+//        });
+        $register->add(EventRegister::onWorkerStart, function (\swoole_server $server, $workerId) use ($cacheVideoObj){
+            if ($workerId == 0) {
+                Timer::loop(1000*2, function () use ($cacheVideoObj) { //easyswoole自身的定时任务的正确用法
+                    $cacheVideoObj->setIndexVideo();
+                });
+            }
+        });
     }
 
     public static function onRequest(Request $request,Response $response): void

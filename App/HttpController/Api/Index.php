@@ -5,6 +5,7 @@ use \EasySwoole\Core\Component\Di;
 use App\Lib\Redis\Redis;
 use App\Model\Video as VideoModel;
 use EasySwoole\Core\Http\Message\Status;
+use EasySwoole\Core\Component\Cache\Cache;
 class Index extends Base
 {
     public function index()
@@ -13,35 +14,63 @@ class Index extends Base
     }
 
     /**
+     * 第一套方案  直接读取 静态化 json数据
      * 获取视频首页分页数据
      * @return bool
      */
-    public function lists()
+    public function lists0()
     {
-        $params = $this->request()->getRequestParam();
-        $page = !empty($params['page']) ? intval($params['page']) : 1;
-        $size = !empty($params['size']) ? intval($params['size']) : 5;
         $condition = [];
-        if (!empty($params['cat_id'])) {
-            $condition['cat_id'] = intval($params['cat_id']);
+        if (!empty($this->params['cat_id'])) {
+            $condition['cat_id'] = intval($this->params['cat_id']);
         }
 
         try {
             $videoModel = new VideoModel();
-            $data = $videoModel->getVideoData($condition, $page, $size);
+            $data = $videoModel->getVideoData($condition, $this->params['page'], $this->params['size']);
         } catch (\Exception $e) {
-            return $this->writeJson(Status::CODE_BAD_REQUEST, $e->getMessage());
+            return $this->writeJson(Status::CODE_BAD_REQUEST, "服务异常");
+        }
+
+        if (!empty($data['lists'])) {
+            foreach ($data['lists'] as &$list) {
+                $list['create_time'] = date("Ymd H:i:s", $list['create_time']);
+                $list['video_duration'] = gmstrftime("%H:%M:%S", $list['video_duration']); //将时长秒数转换为00:00:00的形式
+            }
         }
 
         return $this->writeJson(Status::CODE_OK, 'OK', $data);
 
     }
 
-    //拦截器的使用
-    public function onRequest($action): ?bool
+    /**
+     * 第二套方案  原始  ---- 读取mysql
+     * 获取视频首页分页数据
+     * @return bool
+     */
+    public function lists()
     {
-        //$this->writeJson(403, '您没有权限', []);
-        return true;
+        $condition = [];
+        if (!empty($this->params['cat_id'])) {
+            $condition['cat_id'] = intval($this->params['cat_id']);
+        }
+        $catId = !empty($this->params['cat_id']) ? intval($this->params['cat_id']) : 0;
+        $videoFile = EASYSWOOLE_ROOT."/webroot/video/json/".$catId.".json";
+        //从文件读取json数据(方案二)
+        //$videoData = is_file($videoFile) ? file_get_contents($videoFile) : [];
+
+        //通过Cache读取json数据(方案三)
+        //$videoData = Cache::getInstance()->get("index_video_data_cat_id_".$catId);
+        //$videoData = !empty($videoData) ? $videoData : [];
+
+        //从redis读取json数据(方案四)
+        $videoData = Di::getInstance()->get('REDIS')->get("index_video_data_cat_id_".$catId);
+        $videoData = !empty($videoData) ? json_decode($videoData) : [];
+        print_r($videoData);
+        //PHP进行分页
+        $count = count($videoData);
+        return $this->writeJson(Status::CODE_OK, 'OK', $this->getPagingDatas($count, $videoData));
+
     }
 
     public function video()
