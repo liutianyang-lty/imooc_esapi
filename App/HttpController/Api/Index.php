@@ -6,6 +6,7 @@ use App\Lib\Redis\Redis;
 use App\Model\Video as VideoModel;
 use EasySwoole\Core\Http\Message\Status;
 use EasySwoole\Core\Component\Cache\Cache;
+use App\Lib\Cache\Video as VideoCache;
 class Index extends Base
 {
     public function index()
@@ -55,18 +56,13 @@ class Index extends Base
             $condition['cat_id'] = intval($this->params['cat_id']);
         }
         $catId = !empty($this->params['cat_id']) ? intval($this->params['cat_id']) : 0;
-        $videoFile = EASYSWOOLE_ROOT."/webroot/video/json/".$catId.".json";
-        //从文件读取json数据(方案二)
-        //$videoData = is_file($videoFile) ? file_get_contents($videoFile) : [];
+        try {
+            $videoData = (new VideoCache())->getCache($catId);
+        }catch (\Exception $e){
+            return $this->writeJson(Status::CODE_BAD_REQUEST, "请求失败");
+        }
 
-        //通过Cache读取json数据(方案三)
-        //$videoData = Cache::getInstance()->get("index_video_data_cat_id_".$catId);
-        //$videoData = !empty($videoData) ? $videoData : [];
 
-        //从redis读取json数据(方案四)
-        $videoData = Di::getInstance()->get('REDIS')->get("index_video_data_cat_id_".$catId);
-        $videoData = !empty($videoData) ? json_decode($videoData) : [];
-        print_r($videoData);
         //PHP进行分页
         $count = count($videoData);
         return $this->writeJson(Status::CODE_OK, 'OK', $this->getPagingDatas($count, $videoData));
