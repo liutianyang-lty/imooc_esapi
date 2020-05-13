@@ -22,9 +22,10 @@ class Base {
     }
 
     /**
-     * 插入数据的通用方法
+     * 添加的通用方法
      * @param $data
      * @return bool
+     * @throws \Exception
      */
     public function add($data)
     {
@@ -33,5 +34,16 @@ class Base {
         }
 
         return $this->db->insert($this->tableName, $data);
+    }
+
+    public function getById($id)
+    {
+        $id = intval($id);
+        if (empty($id)) {
+            return [];
+        }
+        $this->db->where('id', $id);
+        $result = $this->db->getOne($this->tableName);
+        return $result ?? [];
     }
 }

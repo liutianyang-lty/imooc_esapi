@@ -34,21 +34,32 @@ class Redis2 {
 
     /**
      * 魔术方法静态调用
-     * @param $method_name
-     * @param $param
+     * @param $method_name // 调用的redis方法名
+     * @param $param // 调用redis方法时传递的参数
      * @return mixed
      */
-    public function __call($method_name, $param)
+//    public function __call($method_name, $param)
+//    {
+//        if (!self::$redis) {
+//            self::getInstance();
+//        }
+//        try {
+//            return call_user_func_array([self::$redis, $method_name], $param);
+//        } catch (\Exception $e) {
+//            print $e->getMessage();
+//            exit;
+//        }
+//    }
+
+    /**
+     * 魔术方法调用redis中的方法
+     * @param $method_name
+     * @param $arguments
+     * @return mixed
+     */
+    public function __call($method_name, $arguments)
     {
-        if (!self::$redis) {
-            self::getInstance();
-        }
-        try {
-            return call_user_func_array([self::$redis, $method_name], $param);
-        } catch (\Exception $e) {
-            print $e->getMessage();
-            exit;
-        }
+        return self::$redis->$method_name(...$arguments);
     }
 
 }

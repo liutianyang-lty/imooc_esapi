@@ -67,6 +67,11 @@ class Redis {
         return $this->redis->set($key, $time, $value);
     }
 
+    /**
+     * 从队列左端弹出
+     * @param $key
+     * @return string
+     */
     public function lPop($key)
     {
         if (empty($key)) {
@@ -76,6 +81,12 @@ class Redis {
         return $this->redis->lPop($key);
     }
 
+    /**
+     * 向列表中推送数据，从右端写入
+     * @param $key
+     * @param $value
+     * @return bool|int|string
+     */
     public function rPush($key, $value)
     {
         if (empty($key)) {
@@ -83,5 +94,37 @@ class Redis {
         }
 
         return $this->redis->rPush($key, $value);
+    }
+
+    /**
+     * 有序集合原子递增
+     * @param $key
+     * @param $number
+     * @param $member
+     * @return bool|float
+     */
+    public function zincrby($key, $number, $member)
+    {
+        if (empty($key) || empty($member)) {
+            return false;
+        }
+
+        return $this->redis->zIncrBy($key, $number, $member);
+    }
+
+    /**
+     * @param $key
+     * @param $start
+     * @param $stop
+     * @param bool $withscores
+     * @return array|bool
+     */
+    public function zrevrange($key, $start, $stop, $withscores=true)
+    {
+        if (empty($key)) {
+            return false;
+        }
+
+        return $this->redis->zRevRange($key, $start, $stop, $withscores);
     }
 }

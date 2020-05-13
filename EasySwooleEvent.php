@@ -57,7 +57,7 @@ Class EasySwooleEvent implements EventInterface {
         ));
 
         //redis相关
-        Di::getInstance()->set('REDIS', Redis::getInstance());
+        Di::getInstance()->set('REDIS', Redis2::getInstance());
 
         //注册消费者进程
 //        $allNum = 3;
