@@ -45,7 +45,6 @@ class Index extends Base
     }
 
     /**
-     * 第二套方案  原始  ---- 读取mysql
      * 获取视频首页分页数据
      * @return bool
      */

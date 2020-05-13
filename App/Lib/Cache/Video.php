@@ -10,6 +10,11 @@ use EasySwoole\Core\Component\Di;
  * @package App\Lib\Cache
  */
 class Video {
+
+    /**
+     * 定时任务执行
+     * @throws \Exception
+     */
     public function setIndexVideo()
     {
         $catIds = array_keys(\Yaconf::get("category.cats"));
@@ -99,6 +104,12 @@ class Video {
         return "index_video_data_cat_id_" . $catId;
     }
 
+    /**
+     * 获取静态数据
+     * @param int $catId
+     * @return array|bool|mixed|null|string
+     * @throws \Exception
+     */
     public function getCache($catId = 0)
     {
         $cacheType = \Yaconf::get("base.indexCacheType");
