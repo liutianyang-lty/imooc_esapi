@@ -53,6 +53,6 @@ class Search extends Base
                 'keywords' => [$keyword],
             ];
         }
-        return $this->writeJson(Status::CODE_OK, "OK", $this->getPagingDatas($total,$resData));
+        return $this->writeJson(Status::CODE_OK, "OK", $this->getPagingDatas($total,$resData,0));
     }
 }
