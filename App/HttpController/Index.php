@@ -2,7 +2,7 @@
 namespace App\HttpController;
 use EasySwoole\Core\Http\AbstractInterface\Controller;
 use App\Lib\AliyunSdk\AliVod;
-use Elasticsearch\ClienBuilder;
+use Elasticsearch\ClientBuilder;
 class Index extends Controller
 {
     function index()
@@ -14,7 +14,7 @@ class Index extends Controller
             "id" => 1,
         ];
 
-        $client = ClienBuilder::create()->setHosts(["127.0.0.1:8301"])->build();
+        $client = ClientBuilder::create()->setHosts(["127.0.0.1:8301"])->build();
         $result = $client->get($params);
         return $this->writeJson(200, "OK",$result);
     }
