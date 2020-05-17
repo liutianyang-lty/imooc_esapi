@@ -7,8 +7,11 @@ namespace Composer\Autoload;
 class ComposerStaticInit3ce94228a2a52f2b6c4ddbf5ef772502
 {
     public static $files = array (
+        'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
+        '9c9a81795c809f4710dd20bec1e349df' => __DIR__ . '/..' . '/joshcam/mysqli-database-class/MysqliDb.php',
+        '94df122b6b32ca0be78d482c26e5ce00' => __DIR__ . '/..' . '/joshcam/mysqli-database-class/dbObject.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -18,9 +21,19 @@ class ComposerStaticInit3ce94228a2a52f2b6c4ddbf5ef772502
             'Symfony\\Polyfill\\Php56\\' => 23,
             'SuperClosure\\' => 13,
         ),
+        'R' => 
+        array (
+            'React\\Promise\\' => 14,
+        ),
         'P' => 
         array (
+            'Psr\\Log\\' => 8,
             'PhpParser\\' => 10,
+        ),
+        'G' => 
+        array (
+            'GuzzleHttp\\Stream\\' => 18,
+            'GuzzleHttp\\Ring\\' => 16,
         ),
         'F' => 
         array (
@@ -28,6 +41,11 @@ class ComposerStaticInit3ce94228a2a52f2b6c4ddbf5ef772502
         ),
         'E' => 
         array (
+            'Elasticsearch\\' => 14,
+            'EasySwoole\\Spl\\Test\\' => 20,
+            'EasySwoole\\Spl\\' => 15,
+            'EasySwoole\\Mysqli\\Tests\\' => 24,
+            'EasySwoole\\Mysqli\\' => 18,
             'EasySwoole\\' => 11,
         ),
         'C' => 
@@ -53,13 +71,49 @@ class ComposerStaticInit3ce94228a2a52f2b6c4ddbf5ef772502
         array (
             0 => __DIR__ . '/..' . '/jeremeamia/superclosure/src',
         ),
+        'React\\Promise\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/react/promise/src',
+        ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
         ),
+        'GuzzleHttp\\Stream\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/streams/src',
+        ),
+        'GuzzleHttp\\Ring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/ringphp/src',
+        ),
         'FastRoute\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/fast-route/src',
+        ),
+        'Elasticsearch\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/elasticsearch/elasticsearch/src/Elasticsearch',
+        ),
+        'EasySwoole\\Spl\\Test\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/easyswoole/spl/test',
+        ),
+        'EasySwoole\\Spl\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/easyswoole/spl/src',
+        ),
+        'EasySwoole\\Mysqli\\Tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/easyswoole/mysqli/tests',
+        ),
+        'EasySwoole\\Mysqli\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/easyswoole/mysqli/src',
         ),
         'EasySwoole\\' => 
         array (
