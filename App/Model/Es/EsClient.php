@@ -4,18 +4,20 @@ namespace App\Model\Es;
 use EasySwoole\Core\AbstractInterface\Singleton;
 use Elasticsearch\ClientBuilder;
 use EasySwoole\Core\Component\Logger;
-class EsClient {
+class EsClient
+{
     //单例模式
     use Singleton;
 
-    public $esClinet = null;
+    public static $esClinet = null;
+
     //私有化构造函数
     private function __construct()
     {
         $config = \Yaconf::get("es");
         try {
             //es实例
-            $this->esClinet = ClientBuilder::create()->setHosts([$config['host'] .":".$config['port']])->build();
+            self::$esClinet = ClientBuilder::create()->setHosts([$config['host'] . ":" . $config['port']])->build();
         } catch (\Exception $e) {
             //记录日志
             Logger::getInstance()->log($e->getMessage());
@@ -25,5 +27,16 @@ class EsClient {
             throw new \Exception("es连接异常");
         }
 
+    }
+
+    /**
+     *
+     * @param $name
+     * @param $arguments
+     * @return mixed
+     */
+    public function __call($name, $arguments)
+    {
+        return self::$esClinet->$name(...$arguments);
     }
 }
