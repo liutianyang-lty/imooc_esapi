@@ -7,6 +7,7 @@ use App\Model\Video as VideoModel;
 use EasySwoole\Core\Http\Message\Status;
 use EasySwoole\Core\Component\Cache\Cache;
 use App\Lib\Cache\Video as VideoCache;
+use App\Mode\Es\EsVideo;
 class Index extends Base
 {
     public function index()
@@ -130,6 +131,12 @@ class Index extends Base
         $client = Di::getInstance()->get('ES');
         //$result = $client->get($params);
         $result = $client->search($params);
+        return $this->writeJson(200, "OK",$result);
+    }
+
+    public function demo2()
+    {
+        $result = (new EsVideo())->searchByName($this->params['name']);
         return $this->writeJson(200, "OK",$result);
     }
 }
