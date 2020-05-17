@@ -110,4 +110,26 @@ class Index extends Base
         $param = $this->request()->getRequestParam();
         Di::getInstance()->get('REDIS')->rPush('imooc_list_test', $param['f']);
     }
+
+    //es容器注入测试
+    public function demo()
+    {
+        $params = [
+            "index" => "imooc_video",
+            "type" => "video",
+            //"id" => 1,
+            "body" => [
+                "query" => [
+                    "match" => [
+                        "name" => "德华",
+                    ]
+                ]
+            ]
+        ];
+
+        $client = Di::getInstance()->get('ES');
+        //$result = $client->get($params);
+        $result = $client->search($params);
+        return $this->writeJson(200, "OK",$result);
+    }
 }

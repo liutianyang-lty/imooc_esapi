@@ -22,6 +22,7 @@ use App\Lib\Process\ConsumerTest;
 use EasySwoole\Core\Component\Crontab\CronTab;
 use App\Lib\Cache\Video as videoCache;
 use EasySwoole\Core\Swoole\Time\Timer;
+use App\Model\Es\EsClient;
 Class EasySwooleEvent implements EventInterface {
 
     public static function frameInitialize(): void
@@ -58,6 +59,9 @@ Class EasySwooleEvent implements EventInterface {
 
         //redis相关
         Di::getInstance()->set('REDIS', Redis2::getInstance());
+
+        //Elasticsearch容器注入
+        Di::getInstance()->set('ES', EsClient::getInstance());
 
         //注册消费者进程
 //        $allNum = 3;

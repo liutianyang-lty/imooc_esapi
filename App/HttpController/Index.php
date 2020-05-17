@@ -15,7 +15,7 @@ class Index extends Controller
             "body" => [
                 "query" => [
                     "match" => [
-                        "name" => "德华"
+                        "name" => "德华",
                     ]
                 ]
             ]
