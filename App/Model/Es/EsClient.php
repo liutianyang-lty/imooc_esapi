@@ -23,7 +23,7 @@ class EsClient
             Logger::getInstance()->log($e->getMessage());
         }
 
-        if (empty($this->esClinet)) {
+        if (empty(self::$esClinet)) {
             throw new \Exception("es连接异常");
         }
 
