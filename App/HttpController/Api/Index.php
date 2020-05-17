@@ -7,7 +7,7 @@ use App\Model\Video as VideoModel;
 use EasySwoole\Core\Http\Message\Status;
 use EasySwoole\Core\Component\Cache\Cache;
 use App\Lib\Cache\Video as VideoCache;
-use App\Mode\Es\EsVideo;
+use App\Model\Es\EsVideo;
 class Index extends Base
 {
     public function index()

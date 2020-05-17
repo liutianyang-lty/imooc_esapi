@@ -1,5 +1,5 @@
 <?php
-namespace App\Mode\Es;
+namespace App\Model\Es;
 
 use EasySwoole\Core\Component\Di;
 class EsVideo {
