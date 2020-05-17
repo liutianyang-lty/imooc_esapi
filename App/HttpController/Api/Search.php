@@ -36,6 +36,7 @@ class Search extends Base
             return $this->writeJson(Status::CODE_OK, "OK", $this->getPagingDatas(0,[]));
         }
 
+        $resData = [];
         foreach ($hits as $hit) {
             $source = $hit['_source'];
             $resData[] = [

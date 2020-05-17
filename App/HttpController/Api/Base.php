@@ -76,16 +76,19 @@ class Base extends Controller
     }
 
     /**
-     * php进行分页处理
+     * php 分页处理
      * @param $count
      * @param $data
+     * @param int $isSplice
      * @return array
      */
-    public function getPagingDatas($count, $data)
+    public function getPagingDatas($count, $data, $isSplice = 1)
     {
         $totalPage = ceil($count / $this->params['size']);
         $data = $data ?? [];
-        $data = array_splice($data, $this->params['from'], $this->params['size']);
+        if ($isSplice ==1) {
+            $data = array_splice($data, $this->params['from'], $this->params['size']);
+        }
         return [
             'total_page' => $totalPage,
             'page_size' => intval($this->params['size']),
