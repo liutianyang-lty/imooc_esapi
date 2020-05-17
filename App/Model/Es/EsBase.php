@@ -11,13 +11,8 @@ class EsBase {
         $this->esClient = Di::getInstance()->get("ES");
     }
 
-    /**
-     * searchByName
-     * @param $name
-     * @param string $type
-     * @return array
-     */
-    public function searchByName($name, $type = "match")
+
+    public function searchByName($name, $from = 0, $size = 10, $type = "match")
     {
         $name =trim($name);
         if (empty($name)) {
@@ -33,7 +28,9 @@ class EsBase {
                     $type => [
                         "name" => $name,
                     ]
-                ]
+                ],
+                "from" => $from,
+                "size" => $size,
             ]
         ];
 
