@@ -85,6 +85,11 @@ class Base extends Controller
     public function getPagingDatas($count, $data, $isSplice = 1)
     {
         $totalPage = ceil($count / $this->params['size']);
+        $maxPageSize = \Yaconf::get("page.maxPageSize");
+        if ($totalPage > $maxPageSize) {
+            $totalPage = $maxPageSize; //避免深度分页
+        }
+
         $data = $data ?? [];
         if ($isSplice ==1) {
             $data = array_splice($data, $this->params['from'], $this->params['size']);
