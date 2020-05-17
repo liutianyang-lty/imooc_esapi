@@ -10,7 +10,10 @@ use EasySwoole\Core\Http\Message\Status;
 class Search extends Base
 {
 
-
+    /**
+     * 站内视频搜索服务 API
+     * @return bool|void
+     */
     public function index()
     {
         $keyword = $this->params['keyword'];
