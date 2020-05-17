@@ -1,6 +1,7 @@
 <?php
 namespace App\Mode\Es;
 
+use EasySwoole\Core\Component\Di;
 class EsVideo {
     public $index = "imooc_video";
     public $type = "video";
@@ -31,8 +32,7 @@ class EsVideo {
             ]
         ];
 
-        $client = ClientBuilder::create()->setHosts(["127.0.0.1:8301"])->build();
-        //$result = $client->get($params);
+        $client = Di::getInstance()->get("ES");
         $result = $client->search($params);
 
         return $result;
