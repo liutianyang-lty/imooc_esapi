@@ -8,6 +8,7 @@ class Redis2 {
 
     public static $redis = "";
 
+    //私有化构造函数
     private function __construct()
     {
         if (!extension_loaded('redis')) {
@@ -50,6 +51,12 @@ class Redis2 {
 //            exit;
 //        }
 //    }
+
+    //私有化克隆方法
+    public function __clone()
+    {
+        // TODO: Implement __clone() method.
+    }
 
     /**
      * 魔术方法调用redis中的方法

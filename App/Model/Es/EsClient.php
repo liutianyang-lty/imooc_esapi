@@ -29,6 +29,10 @@ class EsClient
 
     }
 
+    //私有化克隆方法
+    private function __clone(){ }
+
+
     /**
      *
      * @param $name
