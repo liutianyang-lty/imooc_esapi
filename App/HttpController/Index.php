@@ -11,7 +11,14 @@ class Index extends Controller
         $params = [
             "index" => "imooc_video",
             "type" => "video",
-            "id" => 1,
+            //"id" => 1,
+            "body" => [
+                "query" => [
+                    "match" => [
+                        "name" => "德华"
+                    ]
+                ]
+            ]
         ];
 
         $client = ClientBuilder::create()->setHosts(["127.0.0.1:8301"])->build();
