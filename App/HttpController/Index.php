@@ -2,12 +2,21 @@
 namespace App\HttpController;
 use EasySwoole\Core\Http\AbstractInterface\Controller;
 use App\Lib\AliyunSdk\AliVod;
+use Elasticsearch\ClienBuilder;
 class Index extends Controller
 {
     function index()
     {
-        // TODO: Implement index() method.
-        $this->response()->write('hello world');
+        // elasticsearch-php demo
+        $params = [
+            "index" => "imooc_video",
+            "type" => "video",
+            "id" => 1,
+        ];
+
+        $client = ClienBuilder::create()->setHosts(["127.0.0.1:8301"])->build();
+        $result = $client->get($params);
+        return $this->writeJson(200, "OK",$result);
     }
 
     public function testali()
