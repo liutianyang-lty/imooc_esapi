@@ -22,7 +22,8 @@ class Index extends Controller
         ];
 
         $client = ClientBuilder::create()->setHosts(["127.0.0.1:8301"])->build();
-        $result = $client->get($params);
+        //$result = $client->get($params);
+        $result = $client->search($params);
         return $this->writeJson(200, "OK",$result);
     }
 
